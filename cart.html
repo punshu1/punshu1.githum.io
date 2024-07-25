@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Корзина - Красти Крабс</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Красти Крабс</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Меню</a></li>
+                <li><a href="info.html">О нас</a></li>
+                <li><a href="#">Отзывы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2>Ваша корзина</h2>
+
+        <table id="cartTable">
+            <thead>
+                <tr>
+                    <th>Товар</th>
+                    <th>Количество</th>
+                    <th>Сумма</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+        <div id="cartTotal">Общая сумма: </div>
+        <button onclick="clearCart()">Очистить корзину</button>
+        <button>Оплатить</button>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Красти Крабс</p>
+    </footer>
+
+    <script>
+        function displayCart() {
+            let cart = getCart();
+            let cartTable = document.getElementById("cartTable").getElementsByTagName("tbody")[0];
+            let cartTotal = 0;
+
+            cartTable.innerHTML = "";
+
+            if (cart.length === 0) {
+                cartTable.innerHTML = "<tr><td colspan='3'>Корзина пуста</td></tr>";
+            } else {
+                cart.forEach(function (item) {
+                    let priceStart = item.name.lastIndexOf("(") + 1;
+                    let priceEnd = item.name.lastIndexOf("₽)");
+                    let price = parseInt(item.name.substring(priceStart, priceEnd));
+
+                    let totalItemPrice = price * item.quantity;
+                    cartTotal += totalItemPrice;
+
+                    let row = cartTable.insertRow();
+                    let cell1 = row.insertCell();
+                    let cell2 = row.insertCell();
+                    let cell3 = row.insertCell();
+
+                    cell1.innerHTML = item.name;
+                    cell2.innerHTML = item.quantity;
+                    cell3.innerHTML = totalItemPrice + "₽";
+                });
+
+                document.getElementById("cartTotal").innerText = `Общая сумма: ${cartTotal}₽`;
+            }
+        }
+
+        function getCart() {
+            let cartStr = localStorage.getItem("cart");
+            return cartStr ? JSON.parse(cartStr) : [];
+        }
+
+        function clearCart() {
+            localStorage.removeItem('cart');
+            displayCart();
+        }
+
+        displayCart();
+    </script>
+</body>
+</html>

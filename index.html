@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> The Красти Крабс</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+    <header>
+        <h1>The Красти Крабс</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Меню</a></li>
+                <li><a href="info.html">О нас</a></li>
+                <li><a href="reviews.html">Отзывы</a></li>
+            </ul>
+        </nav>
+        <button class="cart-button" onclick="location.href='cart.html'">Корзина</button>
+    </header>
+
+    <div class="container">
+        <h2>Летний сезон</h2>
+        <div class="product-grid">
+            <div class="product-item" onclick="showPopup('Летний Крабс (250₽)', 250)">
+                <img src="burger.jpg" alt="Крастибургер">
+                <h3>Летний Крабс</h3>
+                <p>Самый вкусный бургер в океане!</p>
+                <p>Цена: 250₽</p>
+            </div>
+            <div class="product-item" onclick="showPopup('Лимонный Поток (70₽)', 70)">
+                <img src="limonad.jpg" alt="Газировка Кельпа">
+                <h3>Лимонный Поток</h3>
+                <p>Освежающий напиток с водорослями.</p>
+                <p>Цена: 70₽</p>
+            </div>
+            <div class="product-item" onclick="showPopup('Крабовые палочки (130₽)', 130)">
+                <img src="crabstick.jpg" alt="Крабби Патти">
+                <h3>Крабовые палочки</h3>
+                <p>Секретный рецепт заведения!</p>
+                <p>Цена: 130₽</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="addToCartPopup" class="popup">
+        <span class="close" onclick="closePopup()">&times;</span>
+        <p>Добавить <span id="productName"></span> в корзину?</p>
+        <p>Количество: <input type="number" id="productQuantity" value="1" min="1"></p>
+        <button onclick="addToCart()">Да</button>
+        <button onclick="closePopup()">Нет</button>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Красти Крабс</p>
+    </footer>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js', { scope: '/' });
+        }
+    </script>
+</body>
+</html>

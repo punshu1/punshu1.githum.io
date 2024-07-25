@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Список задач</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: 100%;
+      box-sizing: border-box;
+      margin-bottom: 10px;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #3e8e41;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    li.completed {
+      text-decoration: line-through;
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Список задач</h1>
+    <input type="text" id="new-task" placeholder="Добавить задачу...">
+    <button id="add-task">Добавить</button>
+    <ul id="task-list"></ul>
+  </div>
+
+  <script>
+    const taskList = document.getElementById('task-list');
+    const newTaskInput = document.getElementById('new-task');
+    const addTaskButton = document.getElementById('add-task');
+
+    addTaskButton.addEventListener('click', () => {
+      const taskText = newTaskInput.value.trim();
+      if (taskText !== "") {
+        addTask(taskText);
+        newTaskInput.value = "";
+      }
+    });
+
+    function addTask(text) {
+      const newTask = document.createElement('li');
+      newTask.innerHTML = `
+        <span>${text}</span>
+        <button class="delete-button">Удалить</button>
+        <input type="checkbox" class="complete-checkbox">
+      `;
+      taskList.appendChild(newTask);
+
+      const deleteButton = newTask.querySelector('.delete-button');
+      deleteButton.addEventListener('click', () => {
+        taskList.removeChild(newTask);
+      });
+
+      const completeCheckbox = newTask.querySelector('.complete-checkbox');
+      completeCheckbox.addEventListener('change', () => {
+        newTask.classList.toggle('completed');
+      });
+    }
+  </script>
+</body>
+</html>
